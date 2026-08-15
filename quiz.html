@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <h1>Quiz</h1>
+    <style>
+        body {font-family: sans-serif;background-color: azure;text-align: center;padding: 40px 20px;}
+        h1 {color:rgb(37, 35, 35)}
+        #question {font-size: 20px;font-weight: bold;margin: 25px auto;max-width:500px}
+        #choices {max-width: 400px;margin:0 auto}
+        #score {margin-top: 25px;font-size: 16px;font-weight: bold;color:rgb(63, 63, 63)}
+        .choice {display: block;width: 100%;padding:12px;margin:10px 0;font-size: 15px;border-radius: 8px;background-color: white;cursor:pointer;}
+        .choice.hover {background-color: rgb(140, 104, 173);color:white}
+    </style>
+</head>
+<body>
+    <div id="question"></div>
+    <div id="choices"></div>
+    <div id="score"></div>
+</body>
+<script>
+    const quizData=[
+       {
+        question:"What keyword declares a block-scoped variable?",
+        choices:["var","let","function","class"],
+        answer:1
+       },
+       {
+        question:"What method adds an item to the end of an array?",
+        choices:["push()","pop()","slice()","splice()"],
+        answer:0
+       },
+       {
+        question:"Which method selects an element by its ID?",
+        choices:["document.getElementById()","document.query()","document.selectId()","document.findById()"],
+        answer:0
+       },
+        {
+        question:"What does DOM stand for?",
+        choices:["Data Object Model","Document Object Model","Document Order Model","Display Object Method"],
+        answer:1
+       }
+    ];
+    let currentIndex=0;
+    let score=0;
+    function changeQuestion(){
+        const scoreDiv=document.getElementById("score");
+        if(currentIndex>=quizData.length){
+            document.getElementById("question").textContent="Quiz Complete!";
+            document.getElementById("choices").innerHTML="";
+            scoreDiv.textContent="Final Score: " + score +"/"+quizData.length;
+        }
+        const q=quizData[currentIndex];
+        document.getElementById("question").textContent=q.question;
+
+        const choicesDiv=document.getElementById("choices");
+        choicesDiv.innerHTML="";
+        q.choices.forEach((choice,i)=>{
+            const btn=document.createElement("button");
+            btn.className="choice";
+            btn.textContent=choice;
+            btn.onclick=()=>checkAnswer(i);
+            choicesDiv.appendChild(btn);    
+            return;
+        });
+        scoreDiv.textContent="Score: "+ score;
+    }
+    function checkAnswer(choiceIndex){
+        if(choiceIndex===quizData[currentIndex].answer){
+            score++;
+        }
+        currentIndex++;
+        changeQuestion();
+    }
+    changeQuestion();
+
+
+</script>
+</html>

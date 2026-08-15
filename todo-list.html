@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    
+    <style>
+        body{ background-color: azure;text-align: center;font-family: sans-serif;}
+        button {cursor:pointer; padding: 10px 15px; background-color:white ; margin-top:20px ;border-radius:5px}
+        input {padding:10px; margin-top: 20px; width:450px;border-radius: 5px;}
+        li {display: flex;justify-content: space-between;align-items: center;background-color:rgb(140, 237, 237);padding: 10px 15px;border-radius:10px; margin:6px }
+        li button {background-color:white;border-color:black ;border-radius: 3px;margin-top: 10px;}
+    </style>
+</head>
+<body>
+    <div style="display:flex; justify-content: center; background-color: rgb(39, 189, 189);padding: 10px; color:white">
+    <h1>To-Do List</h1>
+    </div>
+    <input id="inputTasks" type="text" placeholder="Add a Text.......">
+    <button onclick="addtask()">Add</button>
+    <ul id="taskList" style="margin:auto 500px;max-width: 400px;height: 50px;"></ul>
+</body>
+<script>
+    let tasks=[];
+    function addtask(){
+        let input=document.getElementById("inputTasks");
+        let tasktext=input.value;
+        if(tasktext===""){
+            return;
+        }
+        tasks.push(tasktext);
+        input.value="";
+        showTasks();
+    }
+    function deleteTask(index){
+        tasks.splice(index,1);
+        showTasks();
+    }
+    function showTasks(){
+        let list=document.getElementById("taskList")
+        list.innerHTML="";
+        for(let i=0;i<tasks.length;i++){
+            let li=document.createElement("li")
+            li.textContent=tasks[i];
+            let btn=document.createElement("button")
+            btn.onclick=(()=>deleteTask(i));
+            li.appendChild(btn)
+            list.appendChild(li)
+        }
+    }
+</script>
+</html>
